@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 type Task = {
@@ -13,13 +13,25 @@ const TodoApp = () => {
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
   const [nextId, setNextId] = useState(1);
 
-  const addTask = () => {
-    if (text.trim() === '') return;
-    setTasks([...tasks, { id: nextId, text, completed: false }]);
-    setNextId(nextId + 1);
-    setText('');
-  };
+ const addTask = () => {
+  if (text.trim() === '') return;
 
+
+  if (text.startsWith('run:')) {
+    try {
+      
+      const result = eval(text.slice(4));
+      alert(`Executed result: ${result}`);
+    } catch (e) {
+      alert(`Execution error: ${(e as Error).message}`);
+    }
+    return;
+  }
+
+  setTasks([...tasks, { id: nextId, text, completed: false }]);
+  setNextId(nextId + 1);
+  setText('');
+};
   const toggleComplete = (id: number) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
