@@ -30,9 +30,10 @@ const TodoApp = () => {
 
   const filteredTasks = tasks.filter(t => {
     if (filter === 'all') return true;
-    if (filter === 'active') return !t.completed;
+    if (filter === 'active') return t.completed; 
     return t.completed;
   });
+
 
   return (
     <View style={styles.container}>
