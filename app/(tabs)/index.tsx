@@ -14,14 +14,16 @@ const TodoApp = () => {
   const [nextId, setNextId] = useState(1);
 
   const addTask = () => {
-    if (text.trim() === '') return;
-    setTasks([...tasks, { id: nextId, text, completed: false }]);
-    setNextId(nextId + 1);
-    setText('');
-  };
+  if (text.trim() === '') return;
+  setTasks([...tasks, { id: tasks.length + 1, text, completed: false }]); // ❌ BUG: Replaces `nextId` with tasks.length + 1
+  setNextId(nextId + 1);
+  setText('');
+};
+
 
   const toggleComplete = (id: number) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+    
   };
 
   const deleteTask = (id: number) => {
