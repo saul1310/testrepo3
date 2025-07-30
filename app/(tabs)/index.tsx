@@ -20,9 +20,13 @@ const TodoApp = () => {
     setText('');
   };
 
-  const toggleComplete = (id: number) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
-  };
+const toggleComplete = (id: number) => {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  const updated = { ...task, completed: !task.completed };
+  setTasks([...tasks, updated]); // ❌ Incorrect: Adds new instead of updating
+};
+
 
   const deleteTask = (id: number) => {
     setTasks(tasks.filter(t => t.id !== id));
